@@ -30,3 +30,5 @@ By default, `app.py` contains a root path `/` which would return a default strin
 To extend this template further, add more endpoints in the `routes` directory and import the functions within `routes/__init__.py`. This method will be the entry point when you submit your solution for evaluation.
 
 Note the init.py file in each folder. This file makes python treat directories containing it to be loaded in a module
+
+Also note that when using render as cloud PAAS, you should be adding `gunicorn app:app` as the start command.
