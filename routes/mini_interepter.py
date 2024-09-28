@@ -145,7 +145,7 @@ def abs_value(num):
     return 1, ['n', abs(num)]
 
 def max_value(params):
-    maximum = params[0]
+    maximum = params[0][1]
     for nums in params:
         if (nums[0] != 'n'): return -1, ['u', None]
         if (nums[1] > maximum): maximum = nums[1]
@@ -153,7 +153,7 @@ def max_value(params):
     return 1, ['n', maximum]
 
 def min_value(params):
-    minimum = params[0]
+    minimum = params[0][1]
     for nums in params:
         if (nums[0] != 'n'): return -1, ['u', None]
         if (nums[1] < minimum): minimum = nums[1]
