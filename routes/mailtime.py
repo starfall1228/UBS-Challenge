@@ -189,7 +189,7 @@ def calculate_response_times(emails, users):
 
     for thread in email_threads.values():
         thread.sort(key=lambda x: parse_time(x['timeSent'], user_timezones[x['sender']]))
-        print(thread)
+        # print(thread)
         for i in range(0, len(thread) - 1):
             sender = thread[i]['sender']
             receiver = thread[i+1]['sender']
@@ -201,9 +201,9 @@ def calculate_response_times(emails, users):
             # print(response_time)
 
             # directly minus response time
-            print("sender", sender)
-            print("send", send_time)
-            print("receive", receive_time)
+            # print("sender", sender)
+            # print("send", send_time)
+            # print("receive", receive_time)
             # response_time = (receive_time - send_time).total_seconds()
             # response_times[receiver].append(response_time)
             # response_times[sender].append(response_time)
