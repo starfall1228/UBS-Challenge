@@ -2,6 +2,15 @@ import json
 from datetime import datetime, timedelta
 import pytz
 
+import json
+import logging
+
+from flask import request
+
+from routes import app
+
+logger = logging.getLogger(__name__)
+
 # def parse_time(time_str):
 #     return datetime.fromisoformat(time_str)
 
@@ -100,6 +109,18 @@ data = {
         }
     ]
 }
+
+
+
+@app.route('/mailtime', methods=['POST'])
+def mailtime():
+    data = request.get_json()
+    logging.info("data sent for evaluation {}".format(data))
+
+    average_response_times = calculate_response_times(data['emails'], data['users'])
+    result = average_response_times
+    logging.info("My result :{}".format(result))
+    return json.dumps(result)
 
 # Calculate and print the average response times
 average_response_times = calculate_response_times(data['emails'], data['users'])
