@@ -183,8 +183,8 @@ def weight_of_colony(colony):
 def signature_of_pair(first, second):
     return (first - second ) %10
 
-def new_digit_by_pair(first, second, weight):
-    return (weight + (first - second ) %10)%10
+def new_digit_by_pair(sign, weight):
+    return (weight + sign)%10
 
 # def colony_of_next_generation(colony):
 #     # colony_list = []
@@ -332,6 +332,10 @@ def get_sub_weight(colony, n, weights):
 
 def cal_weight(colony, n):
     colony = np.array(list(colony), dtype=np.int8)
+
+    if (n> 20):
+        return "0"
+    
     
     # pre-cal
     # if (n <= 5):
@@ -343,10 +347,10 @@ def cal_weight(colony, n):
     pow_two = 1
     weights = [np.sum(colony)]
 
-    simplified_level = 23
+    simplified_level = 20
 
     for i in range(1, n + 1):
-        print("performing ", i + 5, "th iteration")
+        # print("performing ", i + 5, "th iteration")
         pow_two *= 2
 
         level = min(i-1, simplified_level)
