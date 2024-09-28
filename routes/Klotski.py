@@ -87,7 +87,8 @@ def Klotski():
     logging.info("data sent for evaluation {}".format(data))
     board = data[0]["board"]
     moves = data[0]["moves"]
+    result = []
 
-    result = convert_map_to_string(move_block(map_generation(board),translate_instruction(moves)))
+    result.append(convert_map_to_string(move_block(map_generation(board),translate_instruction(moves))))
     logging.info("My result :{}".format(result))
     return json.dumps(result)
