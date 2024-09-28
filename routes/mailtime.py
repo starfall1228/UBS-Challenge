@@ -101,11 +101,11 @@ def calculate_response_times(emails, users):
             # print("send", send_time)
             # print("receive", receive_time)
             # print(response_time)
-            # response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
-            # response_times[receiver].append(response_time)
+            response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
+            response_times[receiver].append(response_time)
 
-            response_time = (receive_time - send_time).total_seconds()
-            response_times[sender].append(response_time)
+            # response_time = (receive_time - send_time).total_seconds()
+            # response_times[sender].append(response_time)
 
     average_response_times = {user: round(sum(times) / len(times)) if times else 0 for user, times in response_times.items()}
     return average_response_times
