@@ -20,7 +20,7 @@ def correct_mistypes(dictionary, mistypes):
 
 @app.route('/the-clumsy-programmer', methods=['POST'])
 def clumnsy():
-    data = request.json
+    data = request.json()
     responses = []
     
     # Process the first four test cases
