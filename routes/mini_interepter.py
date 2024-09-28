@@ -85,12 +85,12 @@ def concat(str1, str2):
 def lowercase(str):
     if (str[0] != 's'): return -1, ['u', None]
 
-    return 1, ['s', str.lower()]
+    return 1, ['s', str[1].lower()]
 
 def uppercase(str):
     if (str[0] != 's'): return -1, ['u', None]
 
-    return 1, ['s', str.upper()]
+    return 1, ['s', str[1].upper()]
 
 def substring_replace(src, target, replace):
     if (src[0] != 's'): return -1, ['u', None]
