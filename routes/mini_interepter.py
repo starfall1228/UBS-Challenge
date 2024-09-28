@@ -56,8 +56,9 @@ def check_var(string, start):
     for i in range(start, len(string)):
         if not ((string[i] >= 'a' and string[i] <= 'z' ) or (string[i] >= "A" and string[i] <= 'Z')): break
         temp_name += string[i]
-    if (public_var[temp_name]):
-        return i, public_var[temp_name]
+    
+    if (public_var.get(temp_name)):
+        return i, public_var.get(temp_name)
     else:
         return i, ['v', temp_name]
     
