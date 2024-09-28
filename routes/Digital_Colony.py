@@ -183,8 +183,8 @@ def weight_of_colony(colony):
 def signature_of_pair(first, second):
     return (first - second ) %10
 
-def new_digit_by_pair(first, second, weight):
-    return (weight + (first - second ) %10)%10
+def new_digit_by_pair(sign, weight):
+    return (weight + sign)%10
 
 # def colony_of_next_generation(colony):
 #     # colony_list = []
