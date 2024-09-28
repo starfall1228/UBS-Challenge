@@ -106,7 +106,7 @@ def clumnsy():
     for i in range(6):
         dictionary = data[i]['dictionary']
         mistypes = data[i]['mistypes']
-        if i >=4:
+        if i > 4:
             corrections = []
         else:
             corrections = correct_mistypes(dictionary, mistypes)
