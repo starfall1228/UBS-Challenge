@@ -337,11 +337,11 @@ def mini_interpreter():
         try:
             error_code, value = decode_instructions(data["expressions"][instruction_line], 1)
         except:
-            terminal = ["ERROR at line " + str(instruction_line)] 
+            terminal = ["ERROR at line " + str(instruction_line+1)] 
             break
         else:
             if (error_code < 0): 
-                terminal = ["ERROR at line " + str(instruction_line)] 
+                terminal = ["ERROR at line " + str(instruction_line+1)] 
                 break
 
     result = {"output": terminal}
