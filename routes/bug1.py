@@ -60,7 +60,7 @@ def bug1():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
 
-    projects = data.get("projects")
+    projects = data
 
     result = [calculate_min_hours(p["time"], p["prerequisites"]) for p in projects]
     # result  = calculate_min_hours(time, prerequisites)
