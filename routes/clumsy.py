@@ -8,19 +8,28 @@ from routes import app
 logger = logging.getLogger(__name__)
 
 def correct_mistypes(dictionary, mistypes):
+    # Convert the dictionary list to a hash table for faster lookups
+    words_dict = {word: True for word in dictionary}
+    # words_dict = dictionary
     corrections = []
+    
     for mistyped_word in mistypes:
-        for correct_word in dictionary:
-            # Check if exactly one character is different
-            differences = sum(1 for a, b in zip(mistyped_word, correct_word) if a != b)
+        for correct_word in words_dict:
+            differences = 0
+            for a, b in zip(mistyped_word, correct_word):
+                if a != b:
+                    differences += 1
+                    if differences > 1:
+                        break
             if differences == 1:
                 corrections.append(correct_word)
                 break
+
     return corrections
 
 @app.route('/the-clumsy-programmer', methods=['POST'])
 def clumnsy():
-    data = request.json()
+    data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     responses = []
     
@@ -37,9 +46,3 @@ def clumnsy():
     logging.info("My result :{}".format(responses))
     return jsonify(responses)
 
-
-
-# # Example usage
-# dictionary = ["purple", "rocket", "silver", "gadget", "window", "dragon"]
-# mistypes = ["purqle", "gadgat", "socket", "salver"]
-# print(correct_mistypes(dictionary, mistypes))
