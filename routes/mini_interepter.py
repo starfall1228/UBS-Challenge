@@ -142,7 +142,7 @@ def div_value(num1, num2):
 def abs_value(num):
     if (num[0] != 'n'): return -1, ['u', None]
 
-    return 1, ['n', abs(num)]
+    return 1, ['n', abs(num[1])]
 
 def max_value(params):
     maximum = params[0][1]
