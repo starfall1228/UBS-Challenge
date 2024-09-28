@@ -8,6 +8,9 @@ from flask import request, jsonify
 
 from routes import app
 
+# # print(dodge_bullets(map_input))
+from typing import Tuple, List
+
 class Bullet:
     def __init__(self, direction: str, position: Tuple[int, int]):
         self.direction = direction
@@ -16,9 +19,9 @@ class Bullet:
     
     def move(self, rows: int, cols: int):
         directions = {'u': (-1, 0), 'd': (1, 0), 'l': (0, -1), 'r': (0, 1)}
-        dr, dc = directions[self.direction]
-        if(self.position == None):
+        if self.position is None:
             return
+        dr, dc = directions[self.direction]
         r, c = self.position
         nr, nc = r + dr, c + dc
         if 0 <= nr < rows and 0 <= nc < cols:
@@ -27,107 +30,77 @@ class Bullet:
         else:
             self.position = None  # Bullet moves out of the map
 
-def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
-    rows = len(map)
-    cols = len(map[0])
-    directions = {'u': (-1, 0), 'd': (1, 0), 'l': (0, -1), 'r': (0, 1)}
-    
-    def find_player(map):
-        for r in range(rows):
-            for c in range(cols):
-                if map[r][c] == '*':
-                    return r, c
-        # print("Player not found")
-        return None
-    
-    def is_safe(map, r, c, bullets):
-        if not (0 <= r < rows and 0 <= c < cols):
+def is_safe(position, bullets, current_direction):
+    for bullet in bullets:
+        if bullet.position == position:
             return False
-        # if map[r][c] != '.':
-        #     return False
-        for bullet in bullets:
-            if bullet.position == (r, c):
-                return False
-            if bullet.prev_position == (r, c):
-                return False
-        print("r c", r, c)
-        return True
+            # if bullet direction and human direction are opposite, then it is not safe
+        if bullet.prev_position == position and (current_direction in ['u', 'd'] and bullet.direction in ['u', 'd'] or current_direction in ['l', 'r'] and bullet.direction in ['l', 'r']):
+            return False
+    return True
+
+def find_safe_path(current_position: Tuple[int, int], bullets: List[Bullet], path: List[str] = [], counter: int = 0, rows: int = 0, cols: int = 0): 
+    r, c = current_position
+
+    if not (0 <= r < rows and 0 <= c < cols):
+        return None  # Out of bounds
+
+    if not is_safe(current_position, bullets, path[-1] if path else None):
+        return None  # Current position is not safe
+
+    if counter >= rows - 1:
+        return path  # Reached the maximum recursion depth, we win
+
+    # Move bullets
+    for bullet in bullets:
+        bullet.move(rows, cols)
+
+    # Explore all possible directions
+    directions = {'u': (-1, 0), 'd': (1, 0), 'l': (0, -1), 'r': (0, 1)}
+    for direction, (dr, dc) in directions.items():
+        next_position = (r + dr, c + dc)
+        if next_position not in path:  # Avoid cycles
+            result = find_safe_path(next_position, bullets, path + [direction], counter + 1)
+            if result:
+                return result
+
+    return None  # No safe path found
+def find_player(map, rows, cols):
+    for r in range(rows):
+        for c in range(cols):
+            if map[r][c] == '*':
+                return r, c
+    return None
+
+logger = logging.getLogger(__name__)
+
+@app.route('/dodge', methods=['POST'])
+def dodge():
+    # logging.info("dodge route called")
+    data = request.data.decode('utf-8')  # Get raw data and decode it
+    logging.info("data received: {}".format(data))
     
-    def simulate(map):
-        bullets = []
-        for r in range(rows):
-            for c in range(cols):
-                if map[r][c] in directions:
-                    # print("r c", r, c)
-                    bullets.append(Bullet(map[r][c], (r, c)))
-        
-        # print(map)
-        player_pos = find_player(map)
-        if not player_pos:
-            return {"instructions": None}
-        
-        pr, pc = player_pos
-        instructions = []
-        counter = 0
-        while True:
-            # print("HI")
-            for bullet in bullets:
-                bullet.move(rows, cols)
-            
-            possible_moves = []
-            for bull in bullets:
-                # print("1")
-                print(bull.position , bull.prev_position) 
-            # if dont need to move, dont move and return as you win
-            if is_safe(map, pr, pc, bullets) and counter > 0:
-                return {"instructions": instructions}
+    # Split the input text into a list of strings
+    map_input = data.splitlines()
+    # logging.info("map_input: {}".format(map_input))
+    # logging.info("dodge route called2")
+    start_position = find_player(map_input, len(map_input), len(map_input[0]))
 
-            for move, (dr, dc) in directions.items():
-                nr, nc = pr + dr, pc + dc
-                if is_safe(map, nr, nc, bullets):
-                    # print("safe")
-                    possible_moves.append(move)
-            
-            if not possible_moves:
-                return {"instructions": None}
-            
-            # Choose the first possible move (can be improved with better strategy)
-            move = possible_moves[0]
-            # print("move", move)
-            instructions.append(move)
-            dr, dc = directions[move]
-            pr, pc = pr + dr, pc + dc
-            
-            # if is_safe(map, pr, pc, bullets):
-            #     print("You win")
-            #     break
-            counter += 1
-        return {"instructions": instructions}
+    bullets_arr = []
+
+    directions2 = {'u': (-1, 0), 'd': (1, 0), 'l': (0, -1), 'r': (0, 1)}
+    for r in range(len(map_input)):
+        for c in range(len(map_input[0])):
+            if map_input[r][c] in directions2:
+                bullets_arr.append(Bullet(map_input[r][c], (r, c)))
     
-    return simulate(map)
-# Example usage:
-map_input = [
-    ".dd",
-    "r*.",
-    "..."
-]
+    result = find_safe_path(current_position=start_position, bullets=bullets_arr, rows=len(map_input), cols=len(map_input[0]))
+    logging.info("result: {}".format(result))
+    return jsonify(result)
 
-print(dodge_bullets(map_input))
+# # Example usage
+# bullets = [Bullet('d', (0, 1)), Bullet('d', (0, 2)), Bullet('r', (1, 0))]
+# current_position = (1,1)
 
-# # print(dodge_bullets(map_input))
-# logger = logging.getLogger(__name__)
-
-# @app.route('/dodge', methods=['POST'])
-# def dodge():
-#     logging.info("dodge route called")
-#     data = request.data.decode('utf-8')  # Get raw data and decode it
-#     logging.info("data received: {}".format(data))
-    
-#     # Split the input text into a list of strings
-#     map_input = data.splitlines()
-#     logging.info("map_input: {}".format(map_input))
-#     logging.info("dodge route called2")
-
-#     result = dodge_bullets(map_input)
-#     logging.info("result: {}".format(result))
-#     return jsonify(result)
+# safe_path = find_safe_path(current_position, bullets, rows, cols)
+# print(safe_path)  # Output the safe path if found
