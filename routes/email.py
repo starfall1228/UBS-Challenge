@@ -7,6 +7,8 @@ def parse_time(time_str):
 
 def calculate_response_times(emails, users):
     user_timezones = {user['name']: pytz.timezone(user['officeHours']['timeZone']) for user in users}
+
+    # print(user_timezones)
     response_times = {user['name']: [] for user in users}
 
     email_threads = {}

@@ -37,7 +37,7 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
             for c in range(cols):
                 if map[r][c] == '*':
                     return r, c
-        print("Player not found")
+        # print("Player not found")
         return None
     
     def is_safe(map, r, c, bullets):
@@ -58,7 +58,7 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
         for r in range(rows):
             for c in range(cols):
                 if map[r][c] in directions:
-                    print("r c", r, c)
+                    # print("r c", r, c)
                     bullets.append(Bullet(map[r][c], (r, c)))
         
         # print(map)
@@ -70,13 +70,13 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
         instructions = []
         counter = 0
         while True:
-            print("HI")
+            # print("HI")
             for bullet in bullets:
                 bullet.move(rows, cols)
             
             possible_moves = []
             for bull in bullets:
-                print("1")
+                # print("1")
                 print(bull.position , bull.prev_position) 
             # if dont need to move, dont move and return as you win
             if is_safe(map, pr, pc, bullets) and counter > 0:
@@ -85,7 +85,7 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
             for move, (dr, dc) in directions.items():
                 nr, nc = pr + dr, pc + dc
                 if is_safe(map, nr, nc, bullets):
-                    print("safe")
+                    # print("safe")
                     possible_moves.append(move)
             
             if not possible_moves:
@@ -93,7 +93,7 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
             
             # Choose the first possible move (can be improved with better strategy)
             move = possible_moves[0]
-            print("move", move)
+            # print("move", move)
             instructions.append(move)
             dr, dc = directions[move]
             pr, pc = pr + dr, pc + dc
