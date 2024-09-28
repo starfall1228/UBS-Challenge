@@ -31,7 +31,9 @@ def max_bugsfixed(bugseq):
 def bug2():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
-    result = max_bugsfixed(data)
+    # result = max_bugsfixed(data)
+
+    result = [max_bugsfixed(p) for p in data]
     logging.info("My result :{}".format(result))
     return json.dumps(result)
 
