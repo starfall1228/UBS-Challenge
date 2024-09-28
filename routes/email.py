@@ -213,40 +213,9 @@ def calculate_response_times(emails, users):
     return average_response_times
 
 # Example input
-data = {
-        "emails": [
-            {
-                "subject": "hYHfigOQ4Q",
-                "timeSent": "2024-05-01T13:30:45+08:00",
-                "sender": "bp3zj",
-                "receiver": "cbqK7"
-            },
-            {
-                "subject": "RE: hYHfigOQ4Q",
-                "timeSent": "2024-05-03T12:50:58+08:00",
-                "sender": "cbqK7",
-                "receiver": "bp3zj"
-            }
-        ],
-        "users": [
-            {
-                "name": "bp3zj",
-                "officeHours": {
-                    "timeZone": "Asia/Singapore",
-                    "start": 8,
-                    "end": 17
-                }
-            },
-            {
-                "name": "cbqK7",
-                "officeHours": {
-                    "timeZone": "Asia/Singapore",
-                    "start": 8,
-                    "end": 17
-                }
-            }
-        ]
-    }
+# data = [{'subject': 'tKcYupNci4', 'timeSent': '2024-05-01T09:08:06+08:00', 'sender': 'QNwCT', 'receiver': 'T3zRu'}, {'subject': 'RE: tKcYupNci4', 'timeSent': '2024-05-01T16:15:41-04:00', 'sender': 'T3zRu', 'receiver': 'Tdhfq'}, {'subject': 'RE: RE: tKcYupNci4', 'timeSent': '2024-05-03T11:04:56+08:00', 'sender': 'Tdhfq', 'receiver': 'T3zRu'}, {'subject': 'RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-03T15:20:01-04:00', 'sender': 'T3zRu', 'receiver': '7cfGW'}, {'subject': 'RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-06T11:06:24-04:00', 'sender': '7cfGW', 'receiver': '4y4sP'}, {'subject': 'RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-07T13:55:11-07:00', 'sender': '4y4sP', 'receiver': '3bTKa'}, {'subject': 'RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-08T16:45:27+08:00', 'sender': '3bTKa', 'receiver': 'fIyDV'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-09T15:01:33+08:00', 'sender': 'fIyDV', 'receiver': '3bTKa'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-09T15:34:49+08:00', 'sender': '3bTKa', 'receiver': 'T3zRu'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-09T14:12:42-04:00', 'sender': 'T3zRu', 'receiver': '0s9oZ'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-10T14:30:23+02:00', 'sender': '0s9oZ', 'receiver': '7pYtF'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-10T15:52:05-04:00', 'sender': '7pYtF', 'receiver': 'z7XOj'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-13T15:55:53+02:00', 'sender': 'z7XOj', 'receiver': 'd93v6'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-14T16:43:41+10:00', 'sender': 'd93v6', 'receiver': '0ATul'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-15T14:08:04-07:00', 'sender': '0ATul', 'receiver': 'QNwCT'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-16T14:50:36+08:00', 'sender': 'QNwCT', 'receiver': '4y4sP'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-17T09:58:04-07:00', 'sender': '4y4sP', 'receiver': 'Xw4MC'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-20T11:03:38+08:00', 'sender': 'Xw4MC', 'receiver': 'd93v6'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-20T15:24:35+10:00', 'sender': 'd93v6', 'receiver': '4eMGR'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-21T13:16:38+10:00', 'sender': '4eMGR', 'receiver': 'z3CX0'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-21T12:20:04-04:00', 'sender': 'z3CX0', 'receiver': 'x3GWP'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-21T09:31:05-07:00', 'sender': 'x3GWP', 'receiver': '7pYtF'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-21T17:25:12-04:00', 'sender': '7pYtF', 'receiver': '4eMGR'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-22T12:14:16+10:00', 'sender': '4eMGR', 'receiver': 'PFWVI'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-22T10:15:34+08:00', 'sender': 'PFWVI', 'receiver': 'fIyDV'}, {'subject': 'RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: RE: tKcYupNci4', 'timeSent': '2024-05-23T10:14:28+08:00', 'sender': 'fIyDV', 'receiver': 'DvJJC'}]
+    
+# email = data.get
 # Calculate and print the average response times
 average_response_times = calculate_response_times(data['emails'], data['users'])
 # print(json.dumps(average_response_times, indent=4))
