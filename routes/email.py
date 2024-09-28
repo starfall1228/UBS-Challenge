@@ -187,6 +187,7 @@ def calculate_response_times(emails, users):
 
     for thread in email_threads.values():
         thread.sort(key=lambda x: parse_time(x['timeSent'], user_timezones[x['sender']]))
+        print(thread)
         for i in range(0, len(thread) - 1):
             sender = thread[i]['sender']
             receiver = thread[i+1]['sender']
@@ -198,11 +199,15 @@ def calculate_response_times(emails, users):
             # print(response_time)
 
             # directly minus response time
-            # response_time = (receive_time - send_time).total_seconds()
+            print("sender", sender)
+            print("send", send_time)
+            print("receive", receive_time)
+            response_time = (receive_time - send_time).total_seconds()
             # response_times[sender].append(response_time)
-
-            response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
             response_times[receiver].append(response_time)
+
+            # response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
+            # response_times[receiver].append(response_time)
 
     average_response_times = {user: round(sum(times) / len(times)) if times else 0 for user, times in response_times.items()}
     return average_response_times
@@ -211,33 +216,33 @@ def calculate_response_times(emails, users):
 data = {
         "emails": [
             {
-                "subject": "JXXOa19SUO",
-                "timeSent": "2024-05-01T11:33:37+02:00",
-                "sender": "3mCSR",
-                "receiver": "rPKRL"
+                "subject": "hYHfigOQ4Q",
+                "timeSent": "2024-05-01T13:30:45+08:00",
+                "sender": "bp3zj",
+                "receiver": "cbqK7"
             },
             {
-                "subject": "RE: JXXOa19SUO",
-                "timeSent": "2024-05-02T16:28:00+08:00",
-                "sender": "rPKRL",
-                "receiver": "3mCSR"
+                "subject": "RE: hYHfigOQ4Q",
+                "timeSent": "2024-05-03T12:50:58+08:00",
+                "sender": "cbqK7",
+                "receiver": "bp3zj"
             }
         ],
         "users": [
             {
-                "name": "rPKRL",
+                "name": "bp3zj",
                 "officeHours": {
-                    "timeZone": "Hongkong",
+                    "timeZone": "Asia/Singapore",
                     "start": 8,
                     "end": 17
                 }
             },
             {
-                "name": "3mCSR",
+                "name": "cbqK7",
                 "officeHours": {
-                    "timeZone": "Europe/Paris",
-                    "start": 9,
-                    "end": 18
+                    "timeZone": "Asia/Singapore",
+                    "start": 8,
+                    "end": 17
                 }
             }
         ]
