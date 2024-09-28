@@ -83,9 +83,9 @@ def colony():
     logging.info("data sent for evaluation {}".format(data))
     result = []
     for i in range(len(data)):
-        generation = data[i]["generation"]
+        generations = data[i]["generations"]
         colony = data[i]["colony"]
-        result.append(colony_of_nth_generation(colony, generation))
+        result.append(colony_of_nth_generation(colony, generations))
     
     logging.info("My result :{}".format(result))
     return json.dumps(result)
