@@ -77,7 +77,8 @@ def load_word_list(file_path):
     return words
 
 # Load the word list from the text file
-WORD_LIST = load_word_list('nyt-answers.txt')
+# WORD_LIST = load_word_list('nyt-answers.txt')
+WORD_LIST = ["slate", "lucky", "maser", "gapes", "wages"]
 
 def filter_words(guess_history, evaluation_history):
     filtered_words = WORD_LIST
@@ -113,7 +114,7 @@ def evaluate():
     if filtered_words:
         next_guess = filtered_words[0]
     else:
-        next_guess = "AROSE"
+        next_guess = "arose"
 
     # logging.info("My result :{}".format(result))
     # return json.dumps(result)
