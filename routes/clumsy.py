@@ -21,6 +21,7 @@ def correct_mistypes(dictionary, mistypes):
 @app.route('/the-clumsy-programmer', methods=['POST'])
 def clumnsy():
     data = request.json()
+    logging.info("data sent for evaluation {}".format(data))
     responses = []
     
     # Process the first four test cases
@@ -33,6 +34,7 @@ def clumnsy():
     # Add empty responses for the last two test cases
     responses.extend([{"corrections": []}, {"corrections": []}])
     
+    logging.info("My result :{}".format(responses))
     return jsonify(responses)
 
 
