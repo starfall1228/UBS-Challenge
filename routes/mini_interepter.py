@@ -85,12 +85,12 @@ def concat(str1, str2):
 def lowercase(str):
     if (str[0] != 's'): return -1, ['u', None]
 
-    return 1, ['s', str.lower()]
+    return 1, ['s', str[1].lower()]
 
 def uppercase(str):
     if (str[0] != 's'): return -1, ['u', None]
 
-    return 1, ['s', str.upper()]
+    return 1, ['s', str[1].upper()]
 
 def substring_replace(src, target, replace):
     if (src[0] != 's'): return -1, ['u', None]
@@ -137,12 +137,14 @@ def div_value(num1, num2):
     if (num1[0] != 'n'): return -1, ['u', None]
     if (num2[0] != 'n'): return -1, ['u', None]
 
+    if (num2[1] == 0): return -1, ['u', None]
+
     return 1, ['n', num1[1] / num2[1]]
 
 def abs_value(num):
     if (num[0] != 'n'): return -1, ['u', None]
 
-    return 1, ['n', abs(num)]
+    return 1, ['n', abs(num[1])]
 
 def max_value(params):
     maximum = params[0][1]
@@ -195,7 +197,7 @@ def convert_string(val):
     elif val[0] == 'u':
         return 1, ['s', "null"]
     elif val[0] == 'n':
-        return 1, ['s', str(val[1])]
+        return 1, ['s', str(round(val[1], 4))]
     else:
         return -1, ['u', None]
 
