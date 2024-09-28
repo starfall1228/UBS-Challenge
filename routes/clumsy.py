@@ -85,7 +85,7 @@ def clumnsy():
             break
             # corrections = []
         # else:
-        print(dictionary)
+        print(mistypes)
         corrections = correct_mistypes(dictionary, mistypes)
         responses.append({"corrections": corrections})
     
