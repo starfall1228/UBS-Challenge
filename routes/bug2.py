@@ -27,7 +27,7 @@ def max_bugsfixed(bugseq):
     return len(max_heap)
 
 
-@app.route('/bugfixer/p1', methods=['POST'])
+@app.route('/bugfixer/p2', methods=['POST'])
 def bug2():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
