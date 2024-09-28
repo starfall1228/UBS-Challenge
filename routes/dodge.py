@@ -105,27 +105,29 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
         return {"instructions": instructions}
     
     return simulate(map)
-# # Example usage:
-# map_input = [
-#     ".dd",
-#     "r*.",
-#     "..."
-# ]
+# Example usage:
+map_input = [
+    ".dd",
+    "r*.",
+    "..."
+]
 
-# print(dodge_bullets(map_input))
-logger = logging.getLogger(__name__)
+print(dodge_bullets(map_input))
 
-@app.route('/dodge', methods=['POST'])
-def dodge():
-    logging.info("dodge route called")
-    data = request.data.decode('utf-8')  # Get raw data and decode it
-    logging.info("data received: {}".format(data))
+# # print(dodge_bullets(map_input))
+# logger = logging.getLogger(__name__)
+
+# @app.route('/dodge', methods=['POST'])
+# def dodge():
+#     logging.info("dodge route called")
+#     data = request.data.decode('utf-8')  # Get raw data and decode it
+#     logging.info("data received: {}".format(data))
     
-    # Split the input text into a list of strings
-    map_input = data.splitlines()
-    logging.info("map_input: {}".format(map_input))
-    logging.info("dodge route called2")
+#     # Split the input text into a list of strings
+#     map_input = data.splitlines()
+#     logging.info("map_input: {}".format(map_input))
+#     logging.info("dodge route called2")
 
-    result = dodge_bullets(map_input)
-    logging.info("result: {}".format(result))
-    return jsonify(result)
+#     result = dodge_bullets(map_input)
+#     logging.info("result: {}".format(result))
+#     return jsonify(result)

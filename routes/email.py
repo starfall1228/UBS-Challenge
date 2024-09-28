@@ -217,6 +217,6 @@ def calculate_response_times(emails, users):
     
 # email = data.get
 # Calculate and print the average response times
-average_response_times = calculate_response_times(data['emails'], data['users'])
+# average_response_times = calculate_response_times(data['emails'], data['users'])
 # print(json.dumps(average_response_times, indent=4))
-print(json.dumps({"response": average_response_times}))
+# print(json.dumps({"response": average_response_times}))
