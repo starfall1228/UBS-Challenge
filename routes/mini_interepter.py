@@ -324,8 +324,9 @@ def mini_interpreter():
     public_var = {}
     terminal = []
 
-    for instruction in data["expressions"]:
-        decode_instructions(instruction, 0)
+    for instruction_line in range(len(data["expressions"])):
+        error_code, value = decode_instructions(data["expressions"][instruction_line], 0)
+        if (error_code < 0): terminal = ["ERROR at line " + instruction_line]
 
     result = {"output": terminal}
 
