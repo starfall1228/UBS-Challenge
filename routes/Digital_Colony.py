@@ -15,7 +15,7 @@ def colony():
     for i in range(len(data)):
         # generations = data[i]["generations"]
         # colony = data[i]["colony"]
-        result.append(cal_weight(data[i]["colony"], data[i]["generations"]))
+        result.append(str(cal_weight(data[i]["colony"], data[i]["generations"])))
     
     logging.info("My result :{}".format(result))
     return json.dumps(result)
