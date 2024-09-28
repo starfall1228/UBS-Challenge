@@ -109,6 +109,7 @@ logger = logging.getLogger(__name__)
 
 @app.route('/dodge', methods=['POST'])
 def dodge():
+    logging.info("dodge route called")
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     result = dodge_bullets(data)
