@@ -25,6 +25,6 @@ def coolcodehack():
     # # # Print the response from the external API
     # # print(api_response.status_code)
     # # print(api_response.json())
-
-    # return jsonify(response)
+    response = {"response": "Hello, World!"}
+    return jsonify(response)
     # return jsonify(response)
