@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 
 def max_bugsfixed(bugseq):
     # Sort bugs by their escalation limits
-    bugseq.sort(key=lambda x: x[1])
+    bugseq_list = bugseq["bugseq"]
+    # bugseq[bugseq].sort(key=lambda x: x[1])
+    bugseq = sorted(bugseq_list, key=lambda x: x[1])
     
     current_time = 0
     max_heap = []
@@ -39,3 +41,12 @@ def bug2():
 
 # bugseq = [[20, 30], [30, 150], [110, 135], [210, 330]]
 # print(max_bugsfixed(bugseq))  # Output: 3
+
+
+# input An array of objects
+[
+    {
+        "bugseq": [[20,30],[30,150],[110,135],[210,330]]
+    },
+
+]
