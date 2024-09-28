@@ -15,10 +15,11 @@ def colony():
     for i in range(len(data)):
         # generations = data[i]["generations"]
         # colony = data[i]["colony"]
-        result.append(colony_of_nth_generation(data[i]["colony"], data[i]["generations"]))
+        result.append(str(np.sum(colony_of_nth_generation(data[i]["colony"], data[i]["generations"]))))
     
     logging.info("My result :{}".format(result))
     return json.dumps(result)
+
 # def get_number(target):
 #     negative = 1
 #     value = 0
