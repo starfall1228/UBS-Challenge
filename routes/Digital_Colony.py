@@ -1,11 +1,11 @@
-# import json
-# import logging
+import json
+import logging
 
-# from flask import request
+from flask import request
 
-# from routes import app
+from routes import app
 
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 # def get_number(target):
 #     negative = 1
@@ -77,18 +77,18 @@
 #     return colony_of_nth_generation(colony_of_next_generation(colony), n-1)
 
 
-# @app.route('/digital-colony', methods=['POST'])
-# def colony():
-#     data = request.get_json()
-#     logging.info("data sent for evaluation {}".format(data))
-#     result = []
-#     for i in range(len(data)):
-#         generations = data[i]["generations"]
-#         colony = data[i]["colony"]
-#         result.append(colony_of_nth_generation(colony, generations))
+@app.route('/digital-colony', methods=['POST'])
+def colony():
+    data = request.get_json()
+    logging.info("data sent for evaluation {}".format(data))
+    result = []
+    for i in range(len(data)):
+        # generations = data[i]["generations"]
+        # colony = data[i]["colony"]
+        result.append(colony_of_nth_generation(data[i]["colony"], data[i]["generations"]))
     
-#     logging.info("My result :{}".format(result))
-#     return json.dumps(result)
+    logging.info("My result :{}".format(result))
+    return json.dumps(result)
 
 # #     import numpy as np
 # # from functools import reduce
@@ -277,4 +277,4 @@ def colony_of_nth_generation(colony, n):
 # print(new_digit_by_pair(signature_of_pair(1,4), weight_of_colony("914")))
 # print(colony_of_next_generation("914"))
 # print (colony_of_nth_generation("914", 10))
-print(colony_of_nth_generation("2523", 50))
+# print(colony_of_nth_generation("2523", 50))
