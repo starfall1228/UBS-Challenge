@@ -16,7 +16,7 @@ def coolcodehack():
     # Send a POST request to the external API
     url = 'https://api.crazy-collectors.com/coolcode/api/assignment/score'
     payload = {
-        'username': 'student_username',  # Replace with the actual username
+        'username': 'sJH1Fe',  # Replace with the actual username
         'assignmentId': 123,             # Replace with the actual assignment ID
         'score': 100                     # Replace with the desired score
     }
