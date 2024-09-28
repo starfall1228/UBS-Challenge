@@ -113,7 +113,7 @@ data = {
 
 
 @app.route('/mailtime', methods=['POST'])
-def evaluate():
+def mailtime():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
 
