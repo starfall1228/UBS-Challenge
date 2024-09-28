@@ -2,6 +2,7 @@ import json
 import logging
 
 from flask import request
+from flask import jsonify
 
 from routes import app
 
@@ -108,7 +109,7 @@ def get_substring(str1, start, end):
     if not (isinstance(start[1], int)): return -1, ['u', None]
     if not (isinstance(end[1], int)): return -1, ['u', None]
 
-    if (len(str1[1]) > end or start < 0): return -1, ['u', None]
+    if (len(str1[1]) > end[1] or start[1] < 0): return -1, ['u', None]
 
     return 1, ['s', str1[1][start:end]]
 
@@ -117,6 +118,7 @@ def add_value(params):
     for nums in params:
         if (nums[0] != 'n'): return -1, ['u', None]
         sum += nums[1]
+        sum = round(sum, 4)
 
     return 1, ['n', sum]
 
@@ -124,13 +126,14 @@ def sub_value(num1, num2):
     if (num1[0] != 'n'): return -1, ['u', None]
     if (num2[0] != 'n'): return -1, ['u', None]
 
-    return 1, ['n', num1[1] - num2[1]]
+    return 1, ['n', round(num1[1] - num2[1], 4)]
     
 def mul_value(params):
     product = 1
     for nums in params:
         if (nums[0] != 'n'): return -1, ['u', None]
         product *= nums[1]
+        product = round(product, 4)
 
     return 1, ['n', product]
 
@@ -140,12 +143,12 @@ def div_value(num1, num2):
 
     if (num2[1] == 0): return -1, ['u', None]
 
-    return 1, ['n', num1[1] / num2[1]]
+    return 1, ['n', round(num1[1] / num2[1], 4)]
 
 def abs_value(num):
     if (num[0] != 'n'): return -1, ['u', None]
 
-    return 1, ['n', abs(num[1])]
+    return 1, ['n', round(abs(num[1]), 4)]
 
 def max_value(params):
     maximum = params[0][1]
@@ -331,12 +334,17 @@ def mini_interpreter():
     terminal = []
 
     for instruction_line in range(len(data["expressions"])):
-        error_code, value = decode_instructions(data["expressions"][instruction_line], 1)
-        if (error_code < 0): 
+        try:
+            error_code, value = decode_instructions(data["expressions"][instruction_line], 1)
+        except:
             terminal = ["ERROR at line " + str(instruction_line)] 
             break
+        else:
+            if (error_code < 0): 
+                terminal = ["ERROR at line " + str(instruction_line)] 
+                break
 
     result = {"output": terminal}
 
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result), 200
