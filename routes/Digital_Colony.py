@@ -333,9 +333,9 @@ def get_sub_weight(colony, n, weights):
 def cal_weight(colony, n):
     colony = np.array(list(colony), dtype=np.int8)
 
-    if (n> 20){
+    if (n> 20):
         return "0"
-    }
+    
     
     # pre-cal
     # if (n <= 5):
