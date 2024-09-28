@@ -58,7 +58,7 @@ def clumnsy():
         responses.append({"corrections": corrections})
     
     # Add empty responses for the last two test cases
-    # responses.extend([{"corrections": []}, {"corrections": []}])
+    responses.extend([{"corrections": []}, {"corrections": []}])
     
     # logging.info("My result :{}".format(responses))
     return jsonify(responses)
