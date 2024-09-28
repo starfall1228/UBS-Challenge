@@ -328,7 +328,7 @@ def mini_interpreter():
         error_code, value = decode_instructions(data["expressions"][instruction_line], 0)
         if (error_code < 0): terminal = ["ERROR at line " + instruction_line]
 
-    result = {"output": terminal}
+    result = [{"output": terminal}]
 
     logging.info("My result :{}".format(result))
     return json.dumps(result)
