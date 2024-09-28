@@ -137,6 +137,8 @@ def div_value(num1, num2):
     if (num1[0] != 'n'): return -1, ['u', None]
     if (num2[0] != 'n'): return -1, ['u', None]
 
+    if (num2[1] == 0): return -1, ['u', None]
+
     return 1, ['n', num1[1] / num2[1]]
 
 def abs_value(num):
@@ -195,7 +197,7 @@ def convert_string(val):
     elif val[0] == 'u':
         return 1, ['s', "null"]
     elif val[0] == 'n':
-        return 1, ['s', str(val[1])]
+        return 1, ['s', str(round(val[1], 4))]
     else:
         return -1, ['u', None]
 
