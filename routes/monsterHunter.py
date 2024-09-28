@@ -2,6 +2,7 @@ import json
 import logging
 
 from flask import request
+from flask import jsonify
 
 from routes import app
 
@@ -36,4 +37,4 @@ def hunter_kazuma():
     efficiency = [{"efficiency": check_efficiency(data["monsters"], 0, False, False)} for data in datas]
 
     logging.info("My result :{}".format(efficiency))
-    return json.dumps(efficiency)
+    return jsonify(efficiency), 200
