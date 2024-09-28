@@ -333,7 +333,7 @@ def mini_interpreter():
             terminal = ["ERROR at line " + str(instruction_line)] 
             break
 
-    result = [{"output": terminal}]
+    result = {"output": terminal}
 
     logging.info("My result :{}".format(result))
     return json.dumps(result)
