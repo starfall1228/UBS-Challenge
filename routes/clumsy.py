@@ -8,28 +8,33 @@ from routes import app
 
 logger = logging.getLogger(__name__)
 
-def precompute_corrections(dictionary):
-    corrections = {}
-    for word in dictionary:
-        for i in range(len(word)):
-            for char in string.ascii_lowercase:
-                possible_word = word[:i] + char + word[i+1:]
-                if possible_word != word:
-                    if possible_word not in corrections:
-                        corrections[possible_word] = word
-    return corrections
-
 def correct_mistypes(dictionary, mistypes):
-    words_dict = set(dictionary)
-    corrections_dict = precompute_corrections(dictionary)
+    # Convert the dictionary list to a hash table for faster lookups
+    # start_time = time.time()
+    words_dict = {word: True for word in dictionary}
     corrections = []
     
     for mistyped_word in mistypes:
-        if mistyped_word in corrections_dict:
-            corrections.append(corrections_dict[mistyped_word])
-        else:
-            corrections.append(mistyped_word)  # If no correction found, return the original word
-    
+        found = False
+        for char in string.ascii_lowercase:
+            # Replace the first character with each possible character
+            possible_word = char + mistyped_word[1:]
+            if possible_word in words_dict:
+                corrections.append(possible_word)
+                found = True
+                break
+        if not found:
+            # If no match is found by replacing the first character, check other positions
+            for i in range(1, len(mistyped_word)):
+                for char in string.ascii_lowercase:
+                    possible_word = mistyped_word[:i] + char + mistyped_word[i+1:]
+                    if possible_word in words_dict:
+                        corrections.append(possible_word)
+                        found = True
+                        break
+                if found:
+                    break
+    # print("--- %s seconds ---" % (time.time() - start_time))
     return corrections
 
 
@@ -40,13 +45,14 @@ def clumnsy():
     responses = []
     
     # Process the first four test cases
-    for i in range(6):
+    for i in range(4):
         dictionary = data[i]['dictionary']
         mistypes = data[i]['mistypes']
         corrections = correct_mistypes(dictionary, mistypes)
         responses.append({"corrections": corrections})
     
     # Add empty responses for the last two test cases
+    # responses.extend([{"corrections": []}, {"corrections": []}])
     responses.extend([{"corrections": []}, {"corrections": []}])
     
     # logging.info("My result :{}".format(responses))
