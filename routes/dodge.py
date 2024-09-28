@@ -12,7 +12,7 @@ class Bullet:
     def __init__(self, direction: str, position: Tuple[int, int]):
         self.direction = direction
         self.position = position
-        self.prev_position = None
+        self.prev_position = position
     
     def move(self, rows: int, cols: int):
         directions = {'u': (-1, 0), 'd': (1, 0), 'l': (0, -1), 'r': (0, 1)}
@@ -35,6 +35,7 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
             for c in range(cols):
                 if map[r][c] == '*':
                     return r, c
+        print("Player not found")
         return None
     
     def is_safe(map, r, c, bullets):
@@ -47,6 +48,7 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
                 return False
             if bullet.prev_position == (r, c):
                 return False
+        print("r c", r, c)
         return True
     
     def simulate(map):
@@ -54,8 +56,10 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
         for r in range(rows):
             for c in range(cols):
                 if map[r][c] in directions:
+                    print("r c", r, c)
                     bullets.append(Bullet(map[r][c], (r, c)))
         
+        # print(map)
         player_pos = find_player(map)
         if not player_pos:
             return {"instructions": None}
@@ -64,20 +68,22 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
         instructions = []
         counter = 0
         while True:
+            print("HI")
             for bullet in bullets:
                 bullet.move(rows, cols)
             
             possible_moves = []
-
+            for bull in bullets:
+                print("1")
+                print(bull.position , bull.prev_position) 
             # if dont need to move, dont move and return as you win
             if is_safe(map, pr, pc, bullets) and counter > 0:
                 return {"instructions": instructions}
 
             for move, (dr, dc) in directions.items():
-
-                
                 nr, nc = pr + dr, pc + dc
                 if is_safe(map, nr, nc, bullets):
+                    print("safe")
                     possible_moves.append(move)
             
             if not possible_moves:
@@ -85,6 +91,7 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
             
             # Choose the first possible move (can be improved with better strategy)
             move = possible_moves[0]
+            print("move", move)
             instructions.append(move)
             dr, dc = directions[move]
             pr, pc = pr + dr, pc + dc
@@ -96,7 +103,6 @@ def dodge_bullets(map: List[str]) -> Dict[str, Optional[List[str]]]:
         return {"instructions": instructions}
     
     return simulate(map)
-
 # # Example usage:
 # map_input = [
 #     ".dd",
@@ -111,7 +117,8 @@ logger = logging.getLogger(__name__)
 def dodge():
     logging.info("dodge route called")
     data = request.get_json()
-    logging.info("data sent for evaluation {}".format(data))
+    logging.info("dodge route called2")
     result = dodge_bullets(data)
-    logging.info("My result :{}".format(result))
+    logging.info("dodge route called2")
+    # logging.info("My result :{}".format(result))
     return json.dumps(result)
