@@ -3,6 +3,7 @@ import logging
 import string
 from flask import request, jsonify
 
+from collections import defaultdict
 from routes import app
 
 logger = logging.getLogger(__name__)
