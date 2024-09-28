@@ -71,14 +71,13 @@ logger = logging.getLogger(__name__)
 #                     break
 #     return corrections
 
-
 def precompute_corrections(dictionary):
     corrections = {}
     for word in dictionary:
         for i in range(len(word)):
             for char in string.ascii_lowercase:
-                possible_word = word[:i] + char + word[i+1:]
-                if possible_word != word:
+                if char != word[i]:  # Avoid replacing a character with itself
+                    possible_word = word[:i] + char + word[i+1:]
                     if possible_word not in corrections:
                         corrections[possible_word] = word
     return corrections
