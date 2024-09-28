@@ -13,4 +13,6 @@ import routes.dodge
 import routes.mailtime
 import routes.clumsy
 
+import routes.tourists
+
 import routes.hacker_world

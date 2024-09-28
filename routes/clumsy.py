@@ -48,6 +48,11 @@ def clumnsy():
     for i in range(5):
         dictionary = data[i]['dictionary']
         mistypes = data[i]['mistypes']
+        if i >= 4:
+            break
+            # corrections = []
+        # else:
+        print(mistypes)
         corrections = correct_mistypes(dictionary, mistypes)
         responses.append({"corrections": corrections})
     
