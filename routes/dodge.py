@@ -17,6 +17,8 @@ class Bullet:
     def move(self, rows: int, cols: int):
         directions = {'u': (-1, 0), 'd': (1, 0), 'l': (0, -1), 'r': (0, 1)}
         dr, dc = directions[self.direction]
+        if(self.position == None):
+            return
         r, c = self.position
         nr, nc = r + dr, c + dc
         if 0 <= nr < rows and 0 <= nc < cols:
