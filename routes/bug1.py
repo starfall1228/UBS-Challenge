@@ -52,16 +52,17 @@ projects = [
     }
 ]
 
-results = [calculate_min_hours(p["time"], p["prerequisites"]) for p in projects]
-print(results)  # Output: [15, 12]
+# results = [calculate_min_hours(p["time"], p["prerequisites"]) for p in projects]
+# print(results)  # Output: [15, 12]
 
 @app.route('/bugfixer/p1', methods=['POST'])
 def bug1():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
 
-    time = data.get("time")
-    prerequisites = data.get("prerequisites")
-    result  = calculate_min_hours(time, prerequisites)
+    projects = data.get("projects")
+
+    result = [calculate_min_hours(p["time"], p["prerequisites"]) for p in projects]
+    # result  = calculate_min_hours(time, prerequisites)
     logging.info("My result :{}".format(result))
     return json.dumps(result)
