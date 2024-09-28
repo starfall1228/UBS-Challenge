@@ -78,7 +78,7 @@ def colony_of_nth_generation(colony, n):
 
 
 @app.route('/digital-colony', methods=['POST'])
-def Klotski():
+def colony():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     result = []
