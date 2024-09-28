@@ -43,36 +43,36 @@ def to_working_seconds(start, end, work_start, work_end, tz):
     # print("local end", end)
 
     while current < end:
-        print("while current", current)
+        # print("while current", current)
         if current.weekday() >= 5:  # Skip weekends
-            print("current", current)
-            print("current.weekday()", current.weekday())
+            # print("current", current)
+            # print("current.weekday()", current.weekday())
             current += timedelta(days=(7 - current.weekday()))
             current = current.replace(hour=work_start.hour, minute=work_start.minute, second=0, microsecond=0)
-            print("after weekend", current)
+            # print("after weekend", current)
             continue
         
         if current.time() < work_start:
             current = current.replace(hour=work_start.hour, minute=work_start.minute, second=0, microsecond=0)
-            print("current", current)
+            # print("current", current)
         elif current.time() >= work_end:
-            print("another day before", current)
+            # print("another day before", current)
             current += timedelta(days=1)
             current = current.replace(hour=work_start.hour, minute=work_start.minute, second=0, microsecond=0)
-            print("another day after", current)
+            # print("another day after", current)
             continue
         
         next_end = min(end, current.replace(hour=work_end.hour, minute=work_end.minute, second=0, microsecond=0))
         extra_seconds = (next_end - current).total_seconds()
-        print("extra_seconds", extra_seconds)
+        # print("extra_seconds", extra_seconds)
         total_seconds += extra_seconds
         current = next_end
         if current.time() >= work_end:
-            print("another day", current)
+            # print("another day", current)
             current += timedelta(days=1)
             current = current.replace(hour=work_start.hour, minute=work_start.minute, second=0, microsecond=0)
     
-    print("total_seconds", total_seconds)
+    # print("total_seconds", total_seconds)
     return total_seconds
 
 def calculate_response_times(emails, users):
