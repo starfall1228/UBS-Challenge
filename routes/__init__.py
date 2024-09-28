@@ -5,3 +5,4 @@ import routes.square
 import routes.wordle
 import routes.monsterHunter
 import routes.Klotski
+import routes.bug1
