@@ -108,7 +108,7 @@ def get_substring(str1, start, end):
     if not (isinstance(start[1], int)): return -1, ['u', None]
     if not (isinstance(end[1], int)): return -1, ['u', None]
 
-    if (len(str1[1]) > end or start < 0): return -1, ['u', None]
+    if (len(str1[1]) > end[1] or start[1] < 0): return -1, ['u', None]
 
     return 1, ['s', str1[1][start:end]]
 
