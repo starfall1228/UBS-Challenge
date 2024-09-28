@@ -113,11 +113,11 @@ logger = logging.getLogger(__name__)
 
 def parse_time(time_str, timezone):
     local_time = datetime.fromisoformat(time_str)
-    # if local_time.tzinfo is not None:
-    #     local_time = local_time.replace(tzinfo=None)
-    # local_time = timezone.localize(local_time)
-    # return local_time.astimezone(pytz.utc)
-    return local_time
+    if local_time.tzinfo is not None:
+        local_time = local_time.replace(tzinfo=None)
+    local_time = timezone.localize(local_time)
+    return local_time.astimezone(pytz.utc)
+    # return local_time
 
 def to_working_seconds(start, end, work_start, work_end, tz):
     if start.tzinfo is None:
@@ -204,12 +204,12 @@ def calculate_response_times(emails, users):
             print("sender", sender)
             print("send", send_time)
             print("receive", receive_time)
-            response_time = (receive_time - send_time).total_seconds()
-            # response_times[sender].append(response_time)
-            response_times[receiver].append(response_time)
-
-            # response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
+            # response_time = (receive_time - send_time).total_seconds()
             # response_times[receiver].append(response_time)
+            # response_times[sender].append(response_time)
+
+            response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
+            response_times[receiver].append(response_time)
 
     average_response_times = {user: round(sum(times) / len(times)) if times else 0 for user, times in response_times.items()}
     return average_response_times
