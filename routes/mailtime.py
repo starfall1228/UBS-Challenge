@@ -156,15 +156,27 @@ def calculate_response_times(emails, users):
 @app.route('/mailtime', methods=['POST'])
 def mailtime():
     data = request.get_json()
-    logging.info("data sent for evaluation {}".format(data))
+    # logging.info("data sent for evaluation {}".format(data))
 
     email = data.get("emails")
     users = data.get("users")
 
     average_response_times = calculate_response_times(email, users)
     result = average_response_times
-    logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    # logging.info("My result :{}".format(result))
+
+    '''
+    In this format
+    { "response": 
+    {
+        "Alice": 32700,
+        "Bob": 3600
+    }
+}
+    '''
+
+    return json.dumps({"response": result})
+    # return json.dumps(result)
 
 # # Calculate and print the average response times
 # average_response_times = calculate_response_times(data['emails'], data['users'])

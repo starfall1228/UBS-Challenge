@@ -198,57 +198,50 @@ def calculate_response_times(emails, users):
             # print(response_time)
 
             # directly minus response time
-            response_time = (receive_time - send_time).total_seconds()
-            response_times[sender].append(response_time)
+            # response_time = (receive_time - send_time).total_seconds()
+            # response_times[sender].append(response_time)
 
-            # response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
-            # response_times[receiver].append(response_time)
+            response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
+            response_times[receiver].append(response_time)
 
     average_response_times = {user: round(sum(times) / len(times)) if times else 0 for user, times in response_times.items()}
     return average_response_times
 
 # Example input
 data = {
-    "emails": [
-        {
-            "subject": "subject",
-            "sender": "Alice",
-            "receiver": "Bob",
-            "timeSent": "2024-01-12T15:00:00+01:00"
-        },
-        {
-            "subject": "RE: subject",
-            "sender": "Bob",
-            "receiver": "Alice",
-            "timeSent": "2024-01-15T09:00:00+08:00"
-        },
-        {
-            "subject": "RE: RE: subject",
-            "sender": "Alice",
-            "receiver": "Bob",
-            "timeSent": "2024-01-16T09:05:00+01:00"
-        }
-    ],
-    "users": [
-        {
-            "name": "Alice",
-            "officeHours": {
-                "timeZone": "Europe/Paris",
-                "start": 9,
-                "end": 18
+        "emails": [
+            {
+                "subject": "RE: yiMUJGk6Rx",
+                "timeSent": "2024-05-03T15:40:17+10:00",
+                "sender": "EIgzJ",
+                "receiver": "w0N4z"
+            },
+            {
+                "subject": "yiMUJGk6Rx",
+                "timeSent": "2024-05-01T08:42:01-07:00",
+                "sender": "w0N4z",
+                "receiver": "EIgzJ"
             }
-        },
-        {
-            "name": "Bob",
-            "officeHours": {
-                "timeZone": "Asia/Singapore",
-                "start": 8,
-                "end": 17
+        ],
+        "users": [
+            {
+                "name": "w0N4z",
+                "officeHours": {
+                    "timeZone": "America/Los_Angeles",
+                    "start": 7,
+                    "end": 16
+                }
+            },
+            {
+                "name": "EIgzJ",
+                "officeHours": {
+                    "timeZone": "Australia/Sydney",
+                    "start": 10,
+                    "end": 18
+                }
             }
-        }
-    ]
-}
-
+        ]
+    }
 # Calculate and print the average response times
 average_response_times = calculate_response_times(data['emails'], data['users'])
 print(json.dumps(average_response_times, indent=4))
