@@ -198,11 +198,11 @@ def calculate_response_times(emails, users):
             # print(response_time)
 
             # directly minus response time
-            response_time = (receive_time - send_time).total_seconds()
-            response_times[sender].append(response_time)
+            # response_time = (receive_time - send_time).total_seconds()
+            # response_times[sender].append(response_time)
 
-            # response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
-            # response_times[receiver].append(response_time)
+            response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
+            response_times[receiver].append(response_time)
 
     average_response_times = {user: round(sum(times) / len(times)) if times else 0 for user, times in response_times.items()}
     return average_response_times
@@ -211,33 +211,33 @@ def calculate_response_times(emails, users):
 data = {
         "emails": [
             {
-                "subject": "RE: 7ciC8jnzPf",
-                "timeSent": "2024-05-03T11:38:52+08:00",
-                "sender": "gyVzH",
-                "receiver": "j0PJf"
+                "subject": "JXXOa19SUO",
+                "timeSent": "2024-05-01T11:33:37+02:00",
+                "sender": "3mCSR",
+                "receiver": "rPKRL"
             },
             {
-                "subject": "7ciC8jnzPf",
-                "timeSent": "2024-05-01T10:21:35+02:00",
-                "sender": "j0PJf",
-                "receiver": "gyVzH"
+                "subject": "RE: JXXOa19SUO",
+                "timeSent": "2024-05-02T16:28:00+08:00",
+                "sender": "rPKRL",
+                "receiver": "3mCSR"
             }
         ],
         "users": [
             {
-                "name": "j0PJf",
-                "officeHours": {
-                    "timeZone": "Europe/Paris",
-                    "start": 9,
-                    "end": 18
-                }
-            },
-            {
-                "name": "gyVzH",
+                "name": "rPKRL",
                 "officeHours": {
                     "timeZone": "Hongkong",
                     "start": 8,
                     "end": 17
+                }
+            },
+            {
+                "name": "3mCSR",
+                "officeHours": {
+                    "timeZone": "Europe/Paris",
+                    "start": 9,
+                    "end": 18
                 }
             }
         ]

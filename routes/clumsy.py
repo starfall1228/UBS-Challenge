@@ -1,6 +1,6 @@
 import json
 import logging
-
+import string
 from flask import request, jsonify
 
 from routes import app
@@ -10,21 +10,28 @@ logger = logging.getLogger(__name__)
 def correct_mistypes(dictionary, mistypes):
     # Convert the dictionary list to a hash table for faster lookups
     words_dict = {word: True for word in dictionary}
-    # words_dict = dictionary
     corrections = []
     
     for mistyped_word in mistypes:
-        for correct_word in words_dict:
-            differences = 0
-            for a, b in zip(mistyped_word, correct_word):
-                if a != b:
-                    differences += 1
-                    if differences > 1:
-                        break
-            if differences == 1:
-                corrections.append(correct_word)
+        found = False
+        for char in string.ascii_lowercase:
+            # Replace the first character with each possible character
+            possible_word = char + mistyped_word[1:]
+            if possible_word in words_dict:
+                corrections.append(possible_word)
+                found = True
                 break
-
+        if not found:
+            # If no match is found by replacing the first character, check other positions
+            for i in range(1, len(mistyped_word)):
+                for char in string.ascii_lowercase:
+                    possible_word = mistyped_word[:i] + char + mistyped_word[i+1:]
+                    if possible_word in words_dict:
+                        corrections.append(possible_word)
+                        found = True
+                        break
+                if found:
+                    break
     return corrections
 
 @app.route('/the-clumsy-programmer', methods=['POST'])
