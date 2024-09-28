@@ -15,7 +15,7 @@ def colony():
     for i in range(len(data)):
         # generations = data[i]["generations"]
         # colony = data[i]["colony"]
-        result.append(str(np.sum(colony_of_nth_generation_with_weight(np.array(data[i]["colony"]), data[i]["generations"]))))
+        result.append(cal_weight(data[i]["colony"], data[i]["generations"]))
     
     logging.info("My result :{}".format(result))
     return json.dumps(result)
@@ -296,6 +296,84 @@ def colony_of_nth_generation_with_weight(colony, n, size = None, weight = None):
 
     return colony_of_nth_generation_with_weight(new_colony, n - 1, 2*size - 1, weight + np.sum(kids))
 
+def locate_index(obj1, obj2, tar_index, weights, level):
+    if (obj1[0] == tar_index): return obj1[1]
+    if (obj2[0] == tar_index): return obj2[1]
+
+    sign = signature_of_pair(obj1[1], obj2[1])
+    new_index = int((obj1[0] + obj2[0])/2)
+    new_value = new_digit_by_pair(sign, weights[level])
+
+    new_obj = [new_index, new_value]
+
+    # print("searching {tar_i} at [{start}, {end}]".format(tar_i = tar_index, start = obj1[0], end = obj2[0]))
+
+    if (new_index == tar_index): return new_value
+    if (new_index < tar_index): return locate_index(new_obj, obj2, tar_index, weights, level + 1)
+    if (new_index > tar_index): return locate_index(obj1, new_obj, tar_index, weights, level + 1)
+
+def get_sub_weight(colony, n, weights):
+    if (n <= 0): return colony
+    weight = weights[n * -1]
+
+    x1 = np.array(colony[:-1], dtype = np.int8)
+    x2 = np.array(colony[1:], dtype = np.int8)
+
+    kids = np.mod(np.mod(x1-x2, 10) + weight, 10)
+    
+    # Preallocate the new colony array
+    new_colony = np.empty(2 * len(colony) - 1, dtype = np.int8)
+    # Fill the new colony array
+    new_colony[0::2] = colony
+    new_colony[1::2] = kids
+
+    return get_sub_weight(new_colony, n-1, weights)
+
+
+def cal_weight(colony, n):
+    colony = np.array(list(colony), dtype=np.int8)
+    
+    # pre-cal
+    # if (n <= 5):
+    #     return weight_of_colony(colony_of_nth_generation_with_weight(colony, n))
+    # else:
+    #     colony = colony_of_nth_generation_with_weight(colony, 5)
+    #     n -= 5
+    
+    pow_two = 1
+    weights = [np.sum(colony)]
+
+    simplified_level = 23
+
+    for i in range(1, n + 1):
+        print("performing ", i + 5, "th iteration")
+        pow_two *= 2
+
+        level = min(i-1, simplified_level)
+        weight = colony[0]
+        j = 2 ** level
+
+        # temp_result = []
+        for value in range(len(colony) - 1):
+            left_value = [value * pow_two, colony[value]]
+            right_value = [(value + 1) * pow_two, colony[value + 1]]
+            prev_value = left_value[1]
+            while j <= (value + 1) * pow_two:
+                # print("adding ", j, "th value")
+                # temp_result += [locate_index(left_value, right_value, j, weights, 0)]
+                target_value = locate_index(left_value, right_value, j, weights, 0)
+                sub_weight = weight_of_colony(get_sub_weight([prev_value, target_value], level, weights))
+                weight += sub_weight - prev_value
+
+                prev_value = target_value
+                j += 2 ** level
+        # print(temp_result)
+        # print()
+        
+        weights.append(weight)
+
+    # print(weights)
+    return weights[-1]
 
 # print(weight_of_colony("914"))
 # print(signature_of_pair(int(1), int(4)))
