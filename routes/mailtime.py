@@ -54,61 +54,61 @@ def calculate_response_times(emails, users):
         print(thread)
         for i in range(0, len(thread) - 1):
             sender = thread[i]['sender']
-            print("sender", sender)
+            # print("sender", sender)
             receiver = thread[i+1]['sender']
-            print("receiver", receiver)
+            # print("receiver", receiver)
             send_time = parse_time(thread[i]['timeSent'], user_timezones[sender])
-            print(send_time)
+            # print(send_time)
             receive_time = parse_time(thread[i+1]['timeSent'], user_timezones[receiver])
-            print(receive_time)
+            # print(receive_time)
             response_time = (receive_time - send_time).total_seconds()
-            print(response_time)
+            # print(response_time)
             response_times[sender].append(response_time)
 
     average_response_times = {user: round(sum(times) / len(times)) if times else 0 for user, times in response_times.items()}
     return average_response_times
 
-# Example input
-data = {
-    "emails": [
-        {
-            "subject": "subject",
-            "sender": "Alice",
-            "receiver": "Bob",
-            "timeSent": "2024-01-12T15:00:00+01:00"
-        },
-        {
-            "subject": "RE: subject",
-            "sender": "Bob",
-            "receiver": "Alice",
-            "timeSent": "2024-01-15T09:00:00+08:00"
-        },
-        {
-            "subject": "RE: RE: subject",
-            "sender": "Alice",
-            "receiver": "Bob",
-            "timeSent": "2024-01-16T09:05:00+01:00"
-        }
-    ],
-    "users": [
-        {
-            "name": "Alice",
-            "officeHours": {
-                "timeZone": "Europe/Paris",
-                "start": 9,
-                "end": 18
-            }
-        },
-        {
-            "name": "Bob",
-            "officeHours": {
-                "timeZone": "Asia/Singapore",
-                "start": 8,
-                "end": 17
-            }
-        }
-    ]
-}
+# # Example input
+# data = {
+#     "emails": [
+#         {
+#             "subject": "subject",
+#             "sender": "Alice",
+#             "receiver": "Bob",
+#             "timeSent": "2024-01-12T15:00:00+01:00"
+#         },
+#         {
+#             "subject": "RE: subject",
+#             "sender": "Bob",
+#             "receiver": "Alice",
+#             "timeSent": "2024-01-15T09:00:00+08:00"
+#         },
+#         {
+#             "subject": "RE: RE: subject",
+#             "sender": "Alice",
+#             "receiver": "Bob",
+#             "timeSent": "2024-01-16T09:05:00+01:00"
+#         }
+#     ],
+#     "users": [
+#         {
+#             "name": "Alice",
+#             "officeHours": {
+#                 "timeZone": "Europe/Paris",
+#                 "start": 9,
+#                 "end": 18
+#             }
+#         },
+#         {
+#             "name": "Bob",
+#             "officeHours": {
+#                 "timeZone": "Asia/Singapore",
+#                 "start": 8,
+#                 "end": 17
+#             }
+#         }
+#     ]
+# }
 
 
 
