@@ -4,7 +4,7 @@ from typing import List, Dict, Optional, Tuple
 import json
 import logging
 
-from flask import request
+from flask import request, jsonify
 
 from routes import app
 
@@ -116,9 +116,14 @@ logger = logging.getLogger(__name__)
 @app.route('/dodge', methods=['POST'])
 def dodge():
     logging.info("dodge route called")
-    data = request.get_json()
+    data = request.data.decode('utf-8')  # Get raw data and decode it
+    logging.info("data received: {}".format(data))
+    
+    # Split the input text into a list of strings
+    map_input = data.splitlines()
+    logging.info("map_input: {}".format(map_input))
     logging.info("dodge route called2")
-    result = dodge_bullets(data)
-    logging.info("dodge route called2")
-    # logging.info("My result :{}".format(result))
-    return json.dumps(result)
+
+    result = dodge_bullets(map_input)
+    logging.info("result: {}".format(result))
+    return jsonify(result)
