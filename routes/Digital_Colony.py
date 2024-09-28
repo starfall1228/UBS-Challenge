@@ -15,7 +15,7 @@ def colony():
     for i in range(len(data)):
         # generations = data[i]["generations"]
         # colony = data[i]["colony"]
-        result.append(str(np.sum(colony_of_nth_generation(data[i]["colony"], data[i]["generations"]))))
+        result.append(str(np.sum(colony_of_nth_generation_with_weight(np.array(data[i]["colony"]), data[i]["generations"]))))
     
     logging.info("My result :{}".format(result))
     return json.dumps(result)
@@ -272,7 +272,31 @@ def colony_of_nth_generation(colony, n):
         colony_arr = colony_of_next_generation(colony_arr)
         # n-=1
     return colony_arr
+
+def colony_of_nth_generation_with_weight(colony, n, size = None, weight = None):
+    if (n <= 0): return colony
+    if (size == None): size = len(colony)
+    if (weight == None): weight = np.sum(colony)
     
+    # print(n, "th trials")
+
+    # Preallocate the new colony array
+    new_colony = np.empty(2*size - 1, dtype=int)
+    # new_digit_by_pair()
+
+    x1 = np.array(colony[:-1])
+    x2 = np.array(colony[1:])
+
+    kids = np.mod(np.mod(x1-x2, 10) + weight, 10)
+    
+    # Fill the new colony array
+    new_colony[0::2] = colony
+    new_colony[1::2] = kids
+    
+
+    return colony_of_nth_generation_with_weight(new_colony, n - 1, 2*size - 1, weight + np.sum(kids))
+
+
 # print(weight_of_colony("914"))
 # print(signature_of_pair(int(1), int(4)))
 # print(new_digit_by_pair(signature_of_pair(1,4), weight_of_colony("914")))
