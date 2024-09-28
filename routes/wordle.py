@@ -102,7 +102,7 @@ def filter_words(guess_history, evaluation_history):
     return filtered_words
 
 @app.route('/wordle-game', methods=['POST'])
-def evaluate():
+def wordle():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
 
