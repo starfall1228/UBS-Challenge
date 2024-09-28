@@ -80,8 +80,8 @@ def move_block(map, instruction_list):
 def Klotski():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
-    board = data["board"]
-    moves = data["moves"]
+    board = data[0].get("boards")
+    moves = data[0].get("moves")
 
     result = move_block(map_generation(board),translate_instruction(moves))
     logging.info("My result :{}".format(result))
