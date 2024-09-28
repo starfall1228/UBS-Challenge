@@ -51,6 +51,7 @@ def check_str(string, start, target):
     return temp, True
 
 def check_var(string, start):
+    global public_var
     temp_name = ""
     for i in range(start, len(string)):
         if not ((string[i] >= 'a' and string[i] <= 'z' ) or (string[i] >= "A" and string[i] <= 'Z')): break
@@ -63,10 +64,12 @@ def check_var(string, start):
 
 def put_instruction(var):
     if (var[0] != 's'): return -1, ['u', None]
+    global terminal
     terminal.append(var[1])
     return 1, ['u', None]
     
 def make_var(var_name, value):
+    global public_var
     if (var_name[0] != 'v'): return -1, ['u', None]
     if (value[0] == 'v'): return -1, ['u', None]
 
