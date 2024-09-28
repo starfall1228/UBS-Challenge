@@ -328,9 +328,9 @@ def mini_interpreter():
     terminal = []
 
     for instruction_line in range(len(data["expressions"])):
-        error_code, value = decode_instructions(data["expressions"][instruction_line], 0)
+        error_code, value = decode_instructions(data["expressions"][instruction_line], 1)
         if (error_code < 0): 
-            terminal = ["ERROR at line " + instruction_line] 
+            terminal = ["ERROR at line " + str(instruction_line)] 
             break
 
     result = [{"output": terminal}]
