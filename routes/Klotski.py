@@ -85,10 +85,11 @@ def convert_map_to_string(map):
 def Klotski():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
-    board = data[0]["board"]
-    moves = data[0]["moves"]
     result = []
-
-    result.append(convert_map_to_string(move_block(map_generation(board),translate_instruction(moves))))
+    for i in range(len(data)):
+        board = data[i]["board"]
+        moves = data[i]["moves"]
+        result.append(convert_map_to_string(move_block(map_generation(board),translate_instruction(moves))))
+    
     logging.info("My result :{}".format(result))
     return json.dumps(result)
