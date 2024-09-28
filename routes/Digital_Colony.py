@@ -53,7 +53,7 @@ def colony_of_next_generation(colony):
     result_list = ""
     for i in range(len(colony)):
         colony_list.append(get_number(colony[i]))
-    print (colony_list)
+    # print (colony_list)
     for i in range(len(colony_list) -1 ):
         new_colony_list.append(new_digit_by_pair(signature_of_pair(colony_list[i], colony_list[(i+1)%len(colony_list)]), weight_of_colony(colony)))
     
