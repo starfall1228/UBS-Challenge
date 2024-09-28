@@ -2,6 +2,7 @@ import json
 import logging
 
 from flask import request
+from flask import jsonify
 
 from routes import app
 
@@ -117,6 +118,7 @@ def add_value(params):
     for nums in params:
         if (nums[0] != 'n'): return -1, ['u', None]
         sum += nums[1]
+        sum = round(sum, 4)
 
     return 1, ['n', sum]
 
@@ -124,13 +126,14 @@ def sub_value(num1, num2):
     if (num1[0] != 'n'): return -1, ['u', None]
     if (num2[0] != 'n'): return -1, ['u', None]
 
-    return 1, ['n', num1[1] - num2[1]]
+    return 1, ['n', round(num1[1] - num2[1], 4)]
     
 def mul_value(params):
     product = 1
     for nums in params:
         if (nums[0] != 'n'): return -1, ['u', None]
         product *= nums[1]
+        product = round(product, 4)
 
     return 1, ['n', product]
 
@@ -140,12 +143,12 @@ def div_value(num1, num2):
 
     if (num2[1] == 0): return -1, ['u', None]
 
-    return 1, ['n', num1[1] / num2[1]]
+    return 1, ['n', round(num1[1] / num2[1], 4)]
 
 def abs_value(num):
     if (num[0] != 'n'): return -1, ['u', None]
 
-    return 1, ['n', abs(num[1])]
+    return 1, ['n', round(abs(num[1]), 4)]
 
 def max_value(params):
     maximum = params[0][1]
@@ -339,4 +342,4 @@ def mini_interpreter():
     result = {"output": terminal}
 
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result), 200
