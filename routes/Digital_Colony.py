@@ -7,6 +7,18 @@ from routes import app
 
 logger = logging.getLogger(__name__)
 
+@app.route('/digital-colony', methods=['POST'])
+def colony():
+    data = request.get_json()
+    logging.info("data sent for evaluation {}".format(data))
+    result = []
+    for i in range(len(data)):
+        # generations = data[i]["generations"]
+        # colony = data[i]["colony"]
+        result.append(colony_of_nth_generation(data[i]["colony"], data[i]["generations"]))
+    
+    logging.info("My result :{}".format(result))
+    return json.dumps(result)
 # def get_number(target):
 #     negative = 1
 #     value = 0
@@ -77,18 +89,6 @@ logger = logging.getLogger(__name__)
 #     return colony_of_nth_generation(colony_of_next_generation(colony), n-1)
 
 
-@app.route('/digital-colony', methods=['POST'])
-def colony():
-    data = request.get_json()
-    logging.info("data sent for evaluation {}".format(data))
-    result = []
-    for i in range(len(data)):
-        # generations = data[i]["generations"]
-        # colony = data[i]["colony"]
-        result.append(colony_of_nth_generation(data[i]["colony"], data[i]["generations"]))
-    
-    logging.info("My result :{}".format(result))
-    return json.dumps(result)
 
 # #     import numpy as np
 # # from functools import reduce
