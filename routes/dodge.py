@@ -99,12 +99,17 @@ def dodge():
             if map_input[r][c] in directions2:
                 bullets_arr.append(Bullet(map_input[r][c], (r, c)))
 
-    print(bullets_arr)
+    # print(bullets_arr)
 
     
     result = find_safe_path(current_position=start_position, bullets=bullets_arr, rows=len(map_input), cols=len(map_input[0]))
     logging.info("result: {}".format(result))
-    return jsonify(result)
+    response = {
+    "instructions": result
+    }
+
+    return jsonify(response)
+    # return jsonify(result)
 
 # # Example usage
 # bullets = [Bullet('d', (0, 1)), Bullet('d', (0, 2)), Bullet('r', (1, 0))]
