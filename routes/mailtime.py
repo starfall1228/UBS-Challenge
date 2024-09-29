@@ -44,21 +44,21 @@ def to_working_seconds(start, end, work_start, work_end, tz):
             # print("current", current)
             # print("current.weekday()", current.weekday())
             current += timedelta(days=(7 - current.weekday()))
-            current = current.replace(hour=work_start.hour, minute=work_start.minute, second=0, microsecond=0)
+            current = current.replace(hour=work_start, minute=0, second=0, microsecond=0)
             # print("after weekend", current)
             continue
         
-        if current.time() < work_start:
-            current = current.replace(hour=work_start.hour, minute=work_start.minute, second=0, microsecond=0)
+        if current.time() < current.replace(hour=work_start, minute=0, second=0, microsecond=0):
+            current = current.replace(hour=work_start, minute=0, second=0, microsecond=0)
             # print("current", current)
-        elif current.time() >= work_end:
+        elif current.time() >= current.replace(hour=work_end, minute=0, second=0, microsecond=0):
             # print("another day before", current)
             current += timedelta(days=1)
-            current = current.replace(hour=work_start.hour, minute=work_start.minute, second=0, microsecond=0)
+            current = current.replace(hour=work_start, minute=0, second=0, microsecond=0)
             # print("another day after", current)
             continue
         
-        next_end = min(end, current.replace(hour=work_end.hour, minute=work_end.minute, second=0, microsecond=0))
+        next_end = min(end, current.replace(hour=work_end, minute=0, second=0, microsecond=0))
         extra_seconds = (next_end - current).total_seconds()
         # print("extra_seconds", extra_seconds)
         total_seconds += extra_seconds
@@ -66,14 +66,14 @@ def to_working_seconds(start, end, work_start, work_end, tz):
         if current.time() >= work_end:
             # print("another day", current)
             current += timedelta(days=1)
-            current = current.replace(hour=work_start.hour, minute=work_start.minute, second=0, microsecond=0)
+            current = current.replace(hour=work_start, minute=0, second=0, microsecond=0)
     
     # print("total_seconds", total_seconds)
     return total_seconds
 
 def calculate_response_times(emails, users):
     user_timezones = {user['name']: pytz.timezone(user['officeHours']['timeZone']) for user in users}
-    user_work_hours = {user['name']: (time(user['officeHours']['start']), time(user['officeHours']['end'])) for user in users}
+    user_work_hours = {user['name']: (user['officeHours']['start'], user['officeHours']['end']) for user in users}
 
     response_times = {user['name']: [] for user in users}
 
