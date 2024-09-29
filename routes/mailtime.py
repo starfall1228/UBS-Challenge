@@ -63,7 +63,7 @@ def to_working_seconds(start, end, work_start, work_end, tz):
         # print("extra_seconds", extra_seconds)
         total_seconds += extra_seconds
         current = next_end
-        if current.time() >= work_end:
+        if current.time() >= current.replace(hour=work_end, minute=0, second=0, microsecond=0).time():
             # print("another day", current)
             current += timedelta(days=1)
             current = current.replace(hour=work_start, minute=0, second=0, microsecond=0)
