@@ -39,9 +39,10 @@ def is_safe(position, bullets, current_direction):
             return False
     return True
 
-def find_safe_path(current_position: Tuple[int, int], bullets: List[Bullet], path: List[str] = [], counter: int = 0, rows: int = 0, cols: int = 0): 
+def find_safe_path(current_position: Tuple[int, int], bullets: List[Bullet], rows: int, cols: int, counter: int = 0, path: List[str] = [], ): 
+    # rows, cols = 3, 3  # Assuming a fixed map size for simplicity
     r, c = current_position
-
+    # print("rows", rows)
     if not (0 <= r < rows and 0 <= c < cols):
         return None  # Out of bounds
 
@@ -60,9 +61,12 @@ def find_safe_path(current_position: Tuple[int, int], bullets: List[Bullet], pat
     for direction, (dr, dc) in directions.items():
         next_position = (r + dr, c + dc)
         if next_position not in path:  # Avoid cycles
-            result = find_safe_path(next_position, bullets, path + [direction], counter + 1)
+            result = find_safe_path(next_position, bullets, path = path + [direction], counter = counter + 1, rows = rows, cols = cols)
             if result:
                 return result
+
+    return None  # No safe path found
+
 
     return None  # No safe path found
 def find_player(map, rows, cols):
