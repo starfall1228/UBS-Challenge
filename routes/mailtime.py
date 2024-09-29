@@ -105,7 +105,6 @@ def calculate_response_times(emails, users):
             # print("receive", receive_time)
             response_time = (receive_time - send_time).total_seconds()
             response_times[receiver].append(response_time)
-            response_times[sender].append(response_time)
 
             # response_time = to_working_seconds(send_time, receive_time, work_start, work_end, user_timezones[receiver])
             # response_times[receiver].append(response_time)

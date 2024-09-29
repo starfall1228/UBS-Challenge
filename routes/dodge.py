@@ -84,8 +84,9 @@ def dodge():
     map_input = data.splitlines()
     # logging.info("map_input: {}".format(map_input))
     # logging.info("dodge route called2")
+    print(map_input)
     start_position = find_player(map_input, len(map_input), len(map_input[0]))
-
+    print(start_position)
     bullets_arr = []
 
     directions2 = {'u': (-1, 0), 'd': (1, 0), 'l': (0, -1), 'r': (0, 1)}
@@ -93,6 +94,9 @@ def dodge():
         for c in range(len(map_input[0])):
             if map_input[r][c] in directions2:
                 bullets_arr.append(Bullet(map_input[r][c], (r, c)))
+
+    print(bullets_arr)
+
     
     result = find_safe_path(current_position=start_position, bullets=bullets_arr, rows=len(map_input), cols=len(map_input[0]))
     logging.info("result: {}".format(result))
