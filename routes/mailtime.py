@@ -48,10 +48,10 @@ def to_working_seconds(start, end, work_start, work_end, tz):
             # print("after weekend", current)
             continue
         
-        if current.time() < current.replace(hour=work_start, minute=0, second=0, microsecond=0):
+        if current.time() < current.replace(hour=work_start, minute=0, second=0, microsecond=0).time():
             current = current.replace(hour=work_start, minute=0, second=0, microsecond=0)
             # print("current", current)
-        elif current.time() >= current.replace(hour=work_end, minute=0, second=0, microsecond=0):
+        elif current.time() >= current.replace(hour=work_end, minute=0, second=0, microsecond=0).time():
             # print("another day before", current)
             current += timedelta(days=1)
             current = current.replace(hour=work_start, minute=0, second=0, microsecond=0)
