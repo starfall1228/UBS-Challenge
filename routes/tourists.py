@@ -165,20 +165,23 @@ for station_1, _ in stations_neighbour.items():
         locate_distance(station_1, station_2, [station_1])
 
 def check_satisfactory(locations, init_start_point, start_point, limit, used_time = 0, arrived = []):
-    if (used_time + locations[init_start_point][1] + travel_time[start_point][init_start_point] > limit or len(arrived) == len(locations)): 
+    return_start_pos_time = locations[init_start_point][1] + travel_time[start_point][init_start_point]
+    if (used_time + return_start_pos_time > limit or len(arrived) == len(locations)): 
         return arrived, 0
 
-    max_satisfactory = locations[init_start_point][0]
-    max_arrived = arrived + [init_start_point]
+    arrived.append(start_point)
+
+    max_arrived = arrived
+    max_satisfactory = 0
 
     for key, values in locations.items():
         if (key != start_point and key not in arrived):
             time = travel_time[start_point][key] + values[1]
-            if (used_time + locations[init_start_point][1] + time <= limit):
-                cur_arrived, satisfactory = check_satisfactory(locations, init_start_point, key, limit, used_time + time, arrived + [start_point])
+            if (used_time + return_start_pos_time + time <= limit):
+                cur_arrived, satisfactory = check_satisfactory(locations, init_start_point, key, limit, used_time + time, arrived)
                 satisfactory += values[0]
 
-                if (satisfactory > max_satisfactory and cur_arrived[-1] == init_start_point): 
+                if (satisfactory > max_satisfactory): 
                     max_satisfactory = satisfactory
                     max_arrived = cur_arrived
     
@@ -196,7 +199,7 @@ def tourist():
 
     arrived, satis = check_satisfactory(locations, start_point, start_point, limit)
 
-    result = {"path": arrived, "satisfaction": satis}
+    result = {"path": arrived + [start_point], "satisfaction": satis + locations[start_point][0]}
 
     logging.info("My result :{}".format(result))
     return json.dumps(result)
